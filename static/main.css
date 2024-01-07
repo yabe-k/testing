@@ -68,6 +68,7 @@ a{
     padding-right: 15px;
     padding-top: 8px;
     padding-bottom: 8px;
+    z-index: 10;
 }
 .footer_table{
     width: 100%;
