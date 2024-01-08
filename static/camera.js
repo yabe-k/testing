@@ -5,7 +5,7 @@ let id_animationFlame;
 let id_timeout;
 
 const startVideo = (deviceId) => {
-    navigator.mediaDevices.getUserMedia({ audio: false, video: {width: 1920, height: 1920, facingMode: "environment", deviceId: { exact: deviceId } } })//environment
+    navigator.mediaDevices.getUserMedia({ audio: false, video: {width: {ideal:4096}, height: {ideal:4096}, facingMode: "environment", deviceId: { exact: deviceId } } })//environment
         .then((stream) => {
             mediaStream = stream;
             video.srcObject = stream;

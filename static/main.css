@@ -88,3 +88,26 @@ a{
 .hidden{
     display: none;
 }
+input[type="radio"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-right: 5px;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--accent-colour1);
+    border-radius: 50%;
+    vertical-align: -2px;
+}
+input[type="radio"]:checked:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent-colour1);
+    content: '';
+}
