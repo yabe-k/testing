@@ -4,8 +4,8 @@ let mediaStream;
 let id_animationFlame;
 let id_timeout;
 
-const startVideo = (deviceId) => {
-    navigator.mediaDevices.getUserMedia({ audio: false, video: {width: 1920, height: 1920, facingMode: "environment", deviceId: { exact: deviceId } } })//environment
+const startVideo = () => {
+    navigator.mediaDevices.getUserMedia({ audio: false, video: {width: 1920, height: 1920, facingMode: "environment" } })//environment
         .then((stream) => {
             mediaStream = stream;
             video.srcObject = stream;
@@ -71,33 +71,3 @@ const drawLine = (begin, end) => {
     rectCtx.lineTo(end.x, end.y);
     rectCtx.stroke();
 }
-
-const createCameraRadioButtons = () => {
-    navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-            const videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-            videoDevices.forEach((device, index) => {
-                const radioBtn = document.createElement('input');
-                radioBtn.type = 'radio';
-                radioBtn.name = 'camera';
-                radioBtn.value = device.deviceId;
-                radioBtn.id = `camera${index}`;
-
-                const label = document.createElement('label');
-                label.htmlFor = `camera${index}`;
-                label.textContent = `Camera ${index + 1}`;
-
-                radioBtn.addEventListener('change', () => {
-                    stopVideo();
-                    startVideo(device.deviceId);
-                });
-
-                cameraSwitchDiv.appendChild(radioBtn);
-                cameraSwitchDiv.appendChild(label);
-            });
-        })
-        .catch(error => {
-            console.error('Error enumerating devices:', error);
-        });
-};
