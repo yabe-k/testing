@@ -48,7 +48,7 @@ a{
 }
 .accent3{
     background-color: var(--content-background);
-    border: var(--accent-colour1);
+    border: solid var(--accent-colour1) 2px;
 }
 .content_box{
     margin: 5px;
