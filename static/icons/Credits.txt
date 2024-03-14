@@ -2,3 +2,4 @@ contacts-book.png	https://iconscout.com/free-icon/contacts-book-17
 home.png		https://iconscout.com/free-icon/home-house-building-page-city-casa-old-vintage
 qr-code-scan.png	https://iconscout.com/free-icon/qr-code-scan-2120166
 install.png		https://icooon-mono.com/15984-インストールアイコン/
+web.png			https://icooon-mono.com/11384-インターネットのアイコン/
