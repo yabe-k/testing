@@ -17,7 +17,7 @@
         <link rel="manifest" href="/static/manifest.json">
 
         <!--CSS-->
-        <link rel="stylesheet" href="/static/main.css" type="text/css">
+        <link rel="stylesheet" href="./static/main.css" type="text/css">
         <style type="text/css">
             .link_button{
                 height: 40px;
@@ -157,7 +157,37 @@
                 </tbody>
             </table>
         </div>
+        <!--ホバーQR関係用-->
+        <div id="id_container">{{id}}<div>
+        <div class="qr-switch" id="qr-switch">
+            Show my code
+        </div>
+        <div class="qr-view hidden" id="qr-view">
+            <div id="qr-destination">
+                <!--<img src="https://dummyimage.com/200x200.png/dddddd/000000" alt="dummy image">-->
+            </div>
+            <div style="height: 5px;"></div>
+            <div class="close-qr" id="close-qr">
+                <div>Close</div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        <script src="/static/cryptography.js"></script>
         <script>
+            //QRコードの生成
+            var qrcode = new QRCode('qr-destination', {
+                text: "https://ice2024.onrender.com/person/" + Cryptography.encode(document.getElementById("id_container").innerText),
+                width: 200,
+                height: 200,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            document.getElementById("close-qr").addEventListener("click", () => {
+                document.getElementById("qr-view").classList.add("hidden");
+            });
+            document.getElementById("qr-switch").addEventListener("click", () => {
+                document.getElementById("qr-view").classList.toggle("hidden");
+            });
         </script>
+        <!--ホバーQR関係用ここまで-->
     </body>
 </html>

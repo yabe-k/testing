@@ -17,7 +17,7 @@
         <link rel="manifest" href="/static/manifest.json">
 
         <!--CSS-->
-        <link rel="stylesheet" href="/static/main.css" type="text/css">
+        <link rel="stylesheet" href="./static/main.css" type="text/css">
         <style type="text/css">
             #video{
                 position: absolute;
@@ -104,11 +104,13 @@
                 document.getElementById("list").classList.add("hidden");
                 document.getElementById("home").classList.remove("hidden");
                 document.getElementById("scanner").classList.add("hidden");
+                document.getElementById("qr-switch").classList.add("hidden");
                 stopVideo();
             }
             function openCamera(){
                 document.getElementById("list").classList.add("hidden");
                 document.getElementById("home").classList.add("hidden");
+                document.getElementById("qr-switch").classList.remove("hidden");
                 document.getElementById("scanner").classList.remove("hidden");
                 startVideo();
             }
@@ -142,19 +144,19 @@
                 You are now logged in as {{full_name}}. <a onclick="signOut();" class="textlink">Click here to sign out.</a>
                 <div id="id_container" class="hidden">{{id}}</div><!--IDを保持するためのスペース-->
                 <div class="links_wrapper">
-                    <a href="https://ice2024.org/"><div class="accent3 link_button">
+                    <a href="https://ice2024.org/"><div class="accent4 link_button">
                         <img class="link_button_icon" src="./static/icons/web.webp" alt="an icon of website" height="30px">
                         <p class="link_button_text">Official website</p>
                     </div></a>
-                    <a href="https://ice.confit.atlas.jp/"><div class="accent3 link_button">
+                    <a href="https://ice.confit.atlas.jp/"><div class="accent4 link_button">
                         <img class="link_button_icon" src="./static/icons/book.webp" alt="an icon of a book" height="30px">
                         <p class="link_button_text">Program</p>
                     </div></a>
-                    <div class="accent2 link_button" id="install_button" style="display: none;">
+                    <div class="accent5 link_button" id="install_button" style="display: none;">
                         <img class="link_button_icon" src="./static/icons/install.webp" alt="install icon" height="30px">
                         <p class="link_button_text">Install (Add to home screen)</p>
                     </div>
-                    <a href="./register"><div class="accent2 link_button">
+                    <a href="./register"><div class="accent5 link_button">
                         <img class="link_button_icon" src="./static/icons/person.webp" alt="an icon indicating update of profile" height="30px">
                         <p class="link_button_text">Update your profile</p>
                     </div></a>
@@ -221,6 +223,35 @@
         <script src="/static/jsQR.min.js"></script><!--QRコードとカメラ-->
         <script src="/static/cryptography.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        <!--ホバーQR関係用-->
+        <div class="qr-switch hidden" id="qr-switch">
+            Show my code
+        </div>
+        <div class="qr-view hidden" id="qr-view">
+            <div id="qr-destination">
+                <!--<img src="https://dummyimage.com/200x200.png/dddddd/000000" alt="dummy image">-->
+            </div>
+            <div style="height: 5px;"></div>
+            <div class="close-qr" id="close-qr">
+                <div>Close</div>
+            </div>
+        </div>
+        <script>
+            //QRコードの生成
+            var qrcode = new QRCode('qr-destination', {
+                text: "https://ice2024.onrender.com/person/" + Cryptography.encode(document.getElementById("id_container").innerText),
+                width: 200,
+                height: 200,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            document.getElementById("close-qr").addEventListener("click", () => {
+                document.getElementById("qr-view").classList.add("hidden");
+            });
+            document.getElementById("qr-switch").addEventListener("click", () => {
+                document.getElementById("qr-view").classList.toggle("hidden");
+            });
+        </script>
+        <!--ホバーQR関係用ここまで-->
         <script>
             const video = document.getElementById('video');
             const cvs = document.getElementById('camera-canvas');
