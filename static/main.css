@@ -80,6 +80,9 @@ a{
     background-color: #fff0;
     color: white;
 }
+.footer_spacer{
+    height: 60px;
+}
 .text_link{
     text-decoration: underline;
     color: var(--accent-colour1);

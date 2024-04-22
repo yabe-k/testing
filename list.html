@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=0.8">
+        <meta name="theme-color" content="#8f7948">
+
+        <title>ICE2024</title>
+        <link rel="icon" href="/favicon.ico">
+
+        <!--Import fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+        
+        <!--PWA-->
+        <link rel="manifest" href="/static/manifest.json">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="/static/main.css" type="text/css">
+        <style type="text/css">
+            .link_button{
+                height: 40px;
+                width: 280px;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                /*justify-content: center;*/
+                margin: 5px;
+                display: inline-flex;
+            }
+            .textlink{
+                text-decoration: underline;
+                color: var(--accent-colour1);
+            }
+            .person_wrapper{
+                padding: 10px;
+                border-radius: 8px;
+            }
+            .person_name{
+                font-weight: bold;
+            }
+            .person_image{
+                max-height: 50px;
+                max-width: 50px;
+                display: inline-block;
+            }
+            .timestamp{
+                color: #999999;
+                text-align: right;
+                font-size: small;
+            }
+            .img_wrap{
+                width: 60px;
+                text-align: center;
+            }
+        </style>
+
+        <!--JS-->
+        <script>
+            function openHome(){
+                let url_string = window.location.href;
+                let url = new URL(url_string);
+                let param_id = url.searchParams.get("id");
+                if(param_id != null){
+                    window.location.href = "/?id=" + param_id;
+                }else{
+                    window.location.href = "/";    
+                }
+            }
+            function openCamera(){
+                let url_string = window.location.href;
+                let url = new URL(url_string);
+                let param_id = url.searchParams.get("id");
+                if(param_id != null){
+                    window.location.href = "/?mode=scan&id=" + param_id;
+                }else{
+                    window.location.href = "/?mode=scan"
+                }
+                
+            }
+            function openList(){
+                let url_string = window.location.href;
+                let url = new URL(url_string);
+                let param_id = url.searchParams.get("id");
+                //window.location.href = "/list?id=" + param_id;
+            }
+            function signOut(){
+                document.cookie = "id=; max-age=0";
+                window.location.href = "./signin";
+            }
+            //PWA用
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/static/sw.js')
+                    .then((reg) => { console.log('SW registered.', reg); });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="wrapper main_container">
+            <div id="home" class="">
+                <h1>Your List</h1>
+                <div style="height: 10px;"></div>
+                {% for person, timestamp in people %}
+                    <a href="/view/{{person.attendees_id}}">
+                        <div class="accent2 person_wrapper">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="img_wrap">
+                                            {% if person.image_link is not none %}
+                                                <img src="{{person.image_link}}" class="person_image" loading="lazy">
+                                            {% else %}
+                                                <img src="/static/icons/person2.webp" class="person_image">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <p class="person_name">{{person.full_name()}}</p>
+                                                <p>{{person.affiliation}} ({{person.country}})</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="timestamp">{{ timestamp.strftime("%b %d %H:%M") }}</p>
+                        </div>
+                    </a>
+                    <div style="height: 10px;"></div>
+                {% endfor %}
+            </div>
+            <div class="footer_spacer"></div>
+        </div>
+        <div class="wrapper footer accent1">
+            <table class="footer_table accent1">
+                <tbody>
+                    <tr>
+                        <td>
+                            <button class="footer_button" id="list-button" onclick="openList();">
+                                <img src="./static/icons/contacts-book.webp" alt="Icon of address book" height="30px">
+                                <div>Your list</div>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="footer_button" id="scan-button" onclick="openCamera();">
+                                <img src="./static/icons/qr-code-scan.webp" alt="Icon of QR code scanner" height="30px">
+                                <div>Add connection</div>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="footer_button" id="home-button" onclick="openHome();">
+                                <img src="./static/icons/home.webp" alt="Icon of home" height="30px">
+                                <div>Home</div>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+        </script>
+    </body>
+</html>

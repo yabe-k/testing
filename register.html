@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width,minimum-scale=0.8">
+        <meta name="theme-color" content="#8f7948">
 
         <title>Register your profile</title>
         <link rel="icon" href="/favicon.ico">
@@ -46,6 +47,7 @@
             }
             details{
                 padding-left: 10px;
+                border-radius: 8px;
             }
             h3{
                 margin-top: 10px;
@@ -69,6 +71,14 @@
                 width: 20px;
                 height: 20px;
             }
+            .img_test{
+                max-width: 200px;
+                max-height: 200px;
+            }
+            .textlink{
+                text-decoration: underline;
+                color: var(--accent-colour1);
+            }
         </style>
     </head>
     <body>
@@ -78,18 +88,18 @@
             <form action="" method="POST">
                 <div style="height: 30px;"></div>
                 <h2>Confirm that this is you</h2>
-                <div class="accent2 content_box">
+                <div class="accent2 content_box" style="border-radius: 5px;">
                     <p>Registration number: <span style="font-weight: bold;">{{id}}</span></p>
                     <input type="text" class="hidden" name="attendee_id" value="{{id}}">
-                    <p>Name: <span style="font-weight: bold;">{{name}}</span></p>
-                    <p>Affiliation: <span style="font-weight: bold;">{{affiliation}} ({{country}})</span></p>
+                    <p>Name: <span style="font-weight: bold;">{{person.full_name()}}</span></p>
+                    <p>Affiliation: <span style="font-weight: bold;">{{person.affiliation}} ({{person.country}})</span></p>
                 </div>
-                <span style="font-weight: bold;">If this is not you, <button class="text_link" onclick="signOut()">go back</button> and try again.</span>
+                <span style="font-weight: bold;">If this is not you, <a class="text_link" onclick="signOut()">go back</a> and try again.</span>
                 
                 <div style="height: 30px;"></div>
                 <h2>Do you want to share your e-mail address with other attendees?</h2>
-                <span class="radiobutton"><input type="radio" name="share-email" id="shareMail_yes" value="Yes" checked><label for="shareMail_yes">Yes</label></span>
-                <span class="radiobutton"><input type="radio" name="share-email" id="shareMail_no" value="No"><label for="shareMail_no">No</label></span>
+                <span class="radiobutton"><input type="radio" name="share_email" id="shareMail_yes" value="Yes" {%if person.share_email %} checked {% endif %}><label for="shareMail_yes">Yes</label></span>
+                <span class="radiobutton"><input type="radio" name="share_email" id="shareMail_no" value="No" {%if not person.share_email %} checked {% endif %}><label for="shareMail_no">No</label></span>
                 
                 <div style="height: 30px;"></div>
                 <h2>Select the field of your research</h2>
@@ -114,12 +124,19 @@
                     </summary>
                     <h3>Web sites and SNS accounts</h3>
                     Put a link for your websites or SNS accounts. <br>
-                    Link1: <input class="input" type="text" name="weblink1"><br>
-                    Link2: <input class="input" type="text" name="weblink2"><br>
-                    Link3: <input class="input" type="text" name="weblink3"><br>
+                    Link1: <input class="input" type="text" name="weblink1" value="{{ none_to_empty(person.weblink1) }}" placeholder="https://example.com"><br>
+                    Link2: <input class="input" type="text" name="weblink2" value="{{ none_to_empty(person.weblink2) }}" placeholder="https://example.com"><br>
+                    Link3: <input class="input" type="text" name="weblink3" value="{{ none_to_empty(person.weblink3) }}" placeholder="https://example.com"><br>
+                    <h3>Profile image</h3>
+                    You can put a profile image by specifying image URL on your website etc. 
+                    <br>
+                    If you don't have any image on the web, you can upload <a class="textlink" href="https://postimages.org/" target="_blank">here</a>. Upload an image, copy "Direct link", and then paste here.
+                    <input type="text" id="image_link" class="input" name="image_link" value="{{ none_to_empty(person.image_link) }}" placeholder="https://example.com/picture.jpeg">
+                    <br>
+                    <img id="img_test" src="" class="img_test">
                     <h3>Message</h3>
-                    Put a message (self introduction or ) in 1024 characters. <br>
-                    <textarea class="input textarea" name="" name="message" rows="10"></textarea>
+                    Put a message (like self introduction) in 1024 characters. <br>
+                    <textarea class="input textarea" name="message" rows="10">{{ none_to_empty(person.message) }}</textarea>
 
                 </details>
 
@@ -133,7 +150,7 @@
                 <div style="height: 30px;"></div>
                 
                 <div style="text-align: center;">
-                    <input type="checkbox" name="registered" id="agreement">
+                    <input type="checkbox" name="registered" id="agreement" {% if person.agreement %} checked {% endif %}>
                     <label for="agreement">I accept the usage of data.</label> 
                     <div style="height: 10px;"></div>
                     <input type="submit" class="accent1" value="Continue" id="submit" disabled>
@@ -145,6 +162,8 @@
                 document.cookie = "id=; max-age=0";
                 window.location.href = "./signin";
             }
+            
+            //同意チェックボックス
             const agreement = document.getElementById("agreement");
             const button =  document.getElementById("submit")
             agreement.addEventListener("click", () => {
@@ -153,6 +172,21 @@
                 }else{
                     button.disabled = true;
                 }
+            })
+            if(agreement.checked === true){
+                button.disabled = false;
+            }else{
+                button.disabled = true;
+            }
+
+            //画像プレビュー
+            const input_imgLink = document.getElementById("image_link");
+            const img_test = document.getElementById("img_test");
+            if(input_imgLink!=""){
+                img_test.setAttribute("src", input_imgLink.value)
+            }
+            input_imgLink.addEventListener("change", () => {
+                img_test.setAttribute("src", input_imgLink.value)
             })
         </script>
     </body>

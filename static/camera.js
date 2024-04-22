@@ -45,7 +45,7 @@ const checkImage = () => {
     if (code) {
         //console.log("Code found", code);
         drawRect(code.location);
-        document.getElementById('qr-msg').textContent = `code found: ${code.data}`;
+        document.getElementById('qr-msg').textContent = String(code.data);
     } else {
         //console.log("Code not found");
         rectCtx.clearRect(0, 0, contentWidth, contentHeight);

@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width,minimum-scale=0.8">
+        <meta name="theme-color" content="#8f7948">
 
         <title>Sign in</title>
         <link rel="icon" href="/favicon.ico">
@@ -12,6 +13,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
         
+        <!--JS-->
+        <script src="/static/cryptography.js" async></script>
+
         <!--CSS-->
         <link rel="stylesheet" href="static/main.css" type="text/css">
         <style type="text/css">
@@ -80,7 +84,7 @@
                 <button id="submit" class="accent1">Go</button>
                 <p>Or <button onclick="openVideo();" id="scan_link">scan your name tag</button> to input your number</p>
             </div>
-            <div id="scanner">
+            <div id="scanner" class="hidden">
                 <div id="camera-switch"></div>
                 <div id="qr-msg"></div>
                 <div class="video-wrapper">
@@ -91,8 +95,9 @@
             </div>
             
         </div>
-        <script src="./static/jsQR.js"></script>
-        <script src="./static/camera.js"></script>
+        <!--<script src="./static/jsQR.js"></script>-->
+        <!--<script src="./static/camera.js"></script>-->
+        <script src="./static/jsQR.min.js"></script>
         <script>
             document.getElementById("submit").addEventListener("click", function(){
                 document.cookie = "id=; max-age=0";//Cookie破棄
@@ -107,10 +112,10 @@
                 }else if(mode == "scan"){
                     window.location.href = "./?id=" + document.getElementById("input-registrationNumber").value + "&mode=scan";
                 }else if(mode == "list"){
-                    window.location.href = "./?id=" + document.getElementById("input-registrationNumber").value + "&mode=list";
+                    window.location.href = "./list?id=" + document.getElementById("input-registrationNumber").value;
                 }else if(mode == "person"){
                     code = url.searchParams.get("code");
-                    window.location.href = "./person/" + code + "/?id=" + document.getElementById("input-registrationNumber").value;
+                    window.location.href = "./person/" + code + "?id=" + document.getElementById("input-registrationNumber").value;
                 }
             });
             
@@ -135,7 +140,20 @@
                 document.getElementById("scanner").classList.add("hidden");
                 document.getElementById("scan_link").setAttribute("onclick", "openVideo();");
             }
-
+            //QRコード読み取り実行直後の処理
+            const  qr_msg = document.getElementById("qr-msg");
+            var mo = new MutationObserver(function() {
+                text = qr_msg.innerText
+                if(text.startsWith("https://ice2024.onrender.com/person/")){
+                    document.getElementById("input-registrationNumber").value = Cryptography.decode(text.replace("https://ice2024.onrender.com/person/", ""));
+                    document.getElementById("submit").click();
+                }
+            });
+            var config = {
+                childList: true,
+                CharacterData: true
+            }
+            mo.observe(qr_msg, config);
         </script>
     </body>
 </html>

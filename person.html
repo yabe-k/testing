@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=0.8">
+        <meta name="theme-color" content="#8f7948">
+
+        <title>ICE2024</title>
+        <link rel="icon" href="/favicon.ico">
+
+        <!--Import fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+        
+        <!--PWA-->
+        <link rel="manifest" href="/static/manifest.json">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="/static/main.css" type="text/css">
+        <style type="text/css">
+            p{
+                padding: 3px;
+                font-size: large;
+            }
+            .textlink{
+                text-decoration: underline;
+                color: var(--accent-colour1);
+            }
+            .presentation_wrapper{
+                padding: 10px;
+            }
+            .portrait_img{
+                max-width: 50%;
+                max-height: 200px;
+                display: inline;
+            }
+            .img_wrapper{
+                text-align: center;
+            }
+            .message{
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper main_container">
+            <div id="home" class="">
+                <h1>{{title}}</h1>
+                <div id="img_wrapper">
+                    <img class="portrait_img" src="{{img_address}}" alt="{{img_alt}}">
+                </div>
+                <h2>{{ person.full_name() }}</h2>
+                <p>{{ none_to_empty(person.affiliation) }} ({{ none_to_empty(person.country) }})</p>
+                <p>{{field}}</p>
+                {% set link1 = none_to_empty(person.weblink1) %}
+                {% set link2 = none_to_empty(person.weblink2) %}
+                {% set link3 = none_to_empty(person.weblink3) %}
+                {% set max_length = 35 %}
+                <p><a class="textlink" href="{{ link1 }}">{{ link1[0:min(max_length, len(link1))] }}{{'...' if len(link1) > max_length else ''}}</a></p>
+                <p><a class="textlink" href="{{ link2 }}">{{ link2[0:min(max_length, len(link2))] }}{{'...' if len(link2) > max_length else ''}}</a></p>
+                <p><a class="textlink" href="{{ link3 }}">{{ link3[0:min(max_length, len(link3))] }}{{'...' if len(link3) > max_length else ''}}</a></p>
+                <p class="message">{{ none_to_empty(person.message) }}</p>
+                <div class="accent2 presentation_wrapper">
+                    <h3>Poster Presentation</h3>
+                    <p>Title: AAAAAAAAAAAAAAAA</p>
+                </div>
+            </div>
+            <div class="footer_spacer"></div>
+        </div>
+        <div class="wrapper footer accent1">
+            <table class="footer_table accent1">
+                <tbody>
+                    <tr>
+                        <td>
+                            <a class="footer_button" id="list-button" onclick="openList();">
+                                <img src="/static/icons/contacts-book.webp" alt="Icon of address book" height="30px">
+                                <div>Your list</div>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="footer_button" id="scan-button" href="/?mode=scan">
+                                <img src="/static/icons/qr-code-scan.webp" alt="Icon of QR code scanner" height="30px">
+                                <div>Add connection</div>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="footer_button" id="home-button" href="/?mode=home">
+                                <img src="/static/icons/home.webp" alt="Icon of home" height="30px">
+                                <div>Home</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            function openList(){
+                let url_string = window.location.href;
+                let url = new URL(url_string);
+                let param_id = url.searchParams.get("id");
+                if(param_id != null){
+                    window.location.href = "/list?id=" + param_id;
+                }else{
+                    window.location.href = "/list"
+                }
+                
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+{
+    "name": "ICE2024",
+    "short_name": "ICE2024",
+    "theme_color": "#8f7948",
+    "background_color": "#8f7948",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "description": "The web application serving as a portal of ICE2024 designed for promoting communication.",
+    "icons": [
+        {
+          "src": "/static/icons/icon64.png",
+          "sizes": "64x64",
+          "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any maskable",
+            "src": "/static/icons/icon512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+  }
