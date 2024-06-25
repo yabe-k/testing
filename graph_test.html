@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#3.1</title>
+    <style type="text/css">
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        #container{
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+        }
+        .control{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: #000000BB;
+            height: 100px;
+            z-index: 100;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="control">
+        Colorize each node(person) by
+        <form action="#" name="color_form">
+            <input type="radio" name="color_attribute" value="country" id="radio_country" onchange="colorize_nodes()">
+            <label for="radio_country">Country</label>
+            <input type="radio" name="color_attribute" value="attend_as" id="radio_regtype" onchange="colorize_nodes()">
+            <label for="radio_regtype">Registration type</label>
+            <input type="radio" name="color_attribute" value="field" id="radio_field" onchange="colorize_nodes()">
+            <label for="radio_field">Field category</label>
+        </form>
+    </div>
+    <div id="container"></div>
+    <script src="./data.js"></script>
+    <script src="./bundle.js"></script>
+</body>
+</html>
