@@ -147,7 +147,7 @@ input[type="radio"]:checked:before {
 .qr-view{
     position: fixed;
     padding: 10px;
-    background-color: var(--content-background);
+    background-color: var(--background-colour);
     border: solid var(--accent-colour2);
     border-radius: 10px;
     left: 50%;

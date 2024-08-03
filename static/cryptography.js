@@ -1,7 +1,4 @@
 class Cryptography {
-    static char1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-    static char2 = "zp2SQbwZOlUMDhAuHqtLRi4NJryWfc16eIKBCaGdT9mg83nEVjPvoYxs75X0Fk";
-
     static encode(text) {
         return Cryptography._convert(text, Cryptography.char1, Cryptography.char2);
     }
@@ -22,3 +19,9 @@ class Cryptography {
         return output;
     }
 }
+
+// 静的プロパティの定義
+Cryptography.char1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+Cryptography.char2 = "zp2SQbwZOlUMDhAuHqtLRi4NJryWfc16eIKBCaGdT9mg83nEVjPvoYxs75X0Fk";
+
+window.Cryptography = Cryptography;
